@@ -1,0 +1,27 @@
+{% extends "md_page.html" %}
+
+{% block content %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="jumbo container">
+        <h1 class="display-4">Emprega Tec</h1>
+        <p class="lead">A Emprega Tec tem como objetivo conectar profissionais e oportunidades na área da tecnologia.</p>
+        </div>
+    </div>
+
+    <div class="titulo">
+        <h4>Confira as empresas cadastradas em nossa plataforma</h4>
+    </div>
+    <div class="emp container-fluid">
+        <div class="logos row">
+            {% for empresa in empresas %}
+                <div class="logo-emp col-md-2">
+                    <img src="{{ empresa.foto.url }}" width="90%">
+                    <p><strong>{{ empresa.empresa }}</strong></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+
+{% endblock %}

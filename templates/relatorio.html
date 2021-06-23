@@ -1,0 +1,128 @@
+{% extends "md_page.html" %}
+
+{% block content %}
+
+<div class="titulo">
+    <h4>Acompanhe nossos números através do relatório mensal</h4>
+</div>
+
+<div class="relat container-fluid"></div>
+    <script>
+        WebFontConfig = {
+        google: 
+    {families: ["Open Sans",]},active: function() { 
+        DrawTheChart(ChartData,ChartOptions,"chart-01","bar")}
+    };
+            </script>
+            <script>
+    function DrawTheChart(ChartData,ChartOptions,ChartId,ChartType){
+    eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d"),{type:"'+ChartType+'",data:ChartData,options:ChartOptions});document.getElementById(ChartId).getContext("2d").stroke();')
+    }
+            </script>
+        </head>
+        <body>
+            <canvas  id="chart-01" width="900" height="500"  style="background-color:rgba(255,255,255,1.00);border-radius:0px;width:900px;height:500px;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px"></canvas>
+            <script> function MoreChartOptions(){} 
+
+            var vagas_jan = JSON.parse('{{ vagas_jan|safe }}');
+            var vagas_fev = JSON.parse('{{ vagas_fev|safe }}');
+            var vagas_mar = JSON.parse('{{ vagas_mar|safe }}');
+            var vagas_abr = JSON.parse('{{ vagas_abr|safe }}');
+            var vagas_mai = JSON.parse('{{ vagas_mai|safe }}');
+            var vagas_jun = JSON.parse('{{ vagas_jun|safe }}');
+            var vagas_jul = JSON.parse('{{ vagas_jul|safe }}');
+            var vagas_ago = JSON.parse('{{ vagas_ago|safe }}');
+            var vagas_set = JSON.parse('{{ vagas_set|safe }}');
+            var vagas_out = JSON.parse('{{ vagas_out|safe }}');
+            var vagas_nov = JSON.parse('{{ vagas_nov|safe }}');
+            var vagas_dez = JSON.parse('{{ vagas_dez|safe }}');
+
+            var candidaturas_jan = JSON.parse('{{ candidaturas_jan|safe }}');
+            var candidaturas_fev = JSON.parse('{{ candidaturas_fev|safe }}');
+            var candidaturas_mar = JSON.parse('{{ candidaturas_mar|safe }}');
+            var candidaturas_abr = JSON.parse('{{ candidaturas_abr|safe }}');
+            var candidaturas_mai = JSON.parse('{{ candidaturas_mai|safe }}');
+            var candidaturas_jun = JSON.parse('{{ candidaturas_jun|safe }}');
+            var candidaturas_jul = JSON.parse('{{ candidaturas_jul|safe }}');
+            var candidaturas_ago = JSON.parse('{{ candidaturas_ago|safe }}');
+            var candidaturas_set = JSON.parse('{{ candidaturas_set|safe }}');
+            var candidaturas_out = JSON.parse('{{ candidaturas_out|safe }}');
+            var candidaturas_nov = JSON.parse('{{ candidaturas_nov|safe }}');
+            var candidaturas_dez = JSON.parse('{{ candidaturas_dez|safe }}');
+
+
+
+        var ChartData = {
+        labels : ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        datasets : [
+            {
+            data : [vagas_jan, vagas_fev, vagas_mar, vagas_abr, vagas_mai, vagas_jun, vagas_jul, vagas_ago, vagas_set, vagas_out, vagas_nov, vagas_dez],
+            backgroundColor :'#3498db',
+            borderColor : 'rgba(136,136,136,0.5)',
+            label:"Vagas criadas"},
+    
+            {
+            data : [candidaturas_jan, candidaturas_fev, candidaturas_mar, candidaturas_abr, candidaturas_mai, candidaturas_jun, candidaturas_jul, candidaturas_ago, candidaturas_set, candidaturas_out, candidaturas_nov, candidaturas_dez],
+            backgroundColor :'#ffb11f',
+            borderColor : '#aaaaaa',
+            label:"Candidatos recebidos"},
+    
+    ]
+        };
+    ChartOptions= {
+    responsive:false,
+        layout:{padding:{top:12,left:12,bottom:12,},},
+            scales: {
+        xAxes:[{
+    gridLines:{borderDash:[],},
+    }],
+    
+        yAxes:[{
+    gridLines:{borderDash:[],},
+    }],
+        },plugins:{
+    datalabels:{display:true,
+        font:{
+            style:' bold',},},
+    },
+    legend:{
+        labels:{
+            generateLabels: function(chart){
+                    return  chart.data.datasets.map( function( dataset, i ){
+                    return{
+                        text:dataset.label,
+                        lineCap:dataset.borderCapStyle,
+                        lineDash:[],
+                        lineDashOffset: 0,
+                        lineJoin:dataset.borderJoinStyle,
+                        fillStyle:dataset.backgroundColor,
+                        strokeStyle:dataset.borderColor,
+                        lineWidth:dataset.pointBorderWidth,
+                        lineDash:dataset.borderDash,
+                    }
+                })
+            },
+    
+        },
+    },
+    
+    elements: {
+        arc: {
+    },
+        line: {
+    },
+        rectangle: {
+    borderWidth:0.01,
+    },
+    },
+    tooltips:{
+    },
+    hover:{
+        mode:'nearest',
+        animationDuration:400,
+    },
+    };
+        DrawTheChart(ChartData,ChartOptions,"chart-01","bar");</script>
+</div>
+
+{% endblock %}

@@ -1,0 +1,353 @@
+body {
+    width: 100%;
+}
+/* ----------------------------------------- Navbar ------------------------------------------------ */
+
+.navbar-brand {
+    margin-right: 60px;
+    margin-left: 20px;
+}
+
+.d-flex {
+    margin-left: 80px;
+}
+
+.campo-busca {
+    width: 220px !important;
+}
+
+.navbar {
+    background-color: rgb(34, 36, 128) !important;
+}
+
+.btn-buscar {
+    color: white;
+    border-color: white;
+    box-shadow: none !important;
+}
+.btn-buscar:hover {
+    background-color: white;
+    color: rgb(34, 36, 128);
+}
+
+.sair-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 40px;
+    right: 10px;
+    position: absolute;
+}
+
+.perfil-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 40px;
+    right: 50px;
+    position: absolute;
+}
+
+.graf-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 40px;
+    right: 90px;
+    position: absolute;
+}
+
+.ico-sair {
+    color: rgb(215, 237, 255);
+    font-size: 22px;
+}
+.ico-sair:hover {
+    color: rgb(180, 179, 255)
+}
+
+.ola {
+    color: rgb(215, 237, 255) !important;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    right: 200px;
+    position: absolute;
+}
+
+.btn-entrar {
+    right: 20px;
+    position: absolute;
+}
+
+.btn-cadastro {
+    right: 80px;
+    position: absolute;
+}
+
+.btn-publique {
+    cursor: pointer;
+}
+
+/* -------------------------------------------- Index -------------------------------------------------- */
+
+.jumbotron {
+    background-image: url("https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_960_720.jpg");
+    background-size: cover;
+    height: 390px;
+    color: white;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+
+.jumbo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    height: 200px;
+    opacity: 0.9;
+}
+
+.emp {
+    margin-bottom: 3px;
+}
+
+.titulo {
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.titulo h4{
+    margin-top: 40px;
+    text-align: center;
+}
+
+.logos {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: flex-start;
+    padding: 5px;
+    margin-bottom: 40px;
+}
+
+.logo-emp {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    box-shadow:  5px 5px 2px 4px rgb(228, 228, 228);
+}
+
+.logo-emp p {
+    color: orangered;
+}
+
+/* -------------------------------------------- Perfil -------------------------------------------------- */
+
+.perfil-cont {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 100px;
+    width: 70%;
+}
+
+.perfil-cont a:hover {
+    cursor: pointer;
+    color: orange !important;
+}
+
+.perfil-candidato {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.perfil-candidato img {
+    width: 200px;
+    border-radius: 80px;
+}
+
+.edt-exc {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+
+.fa-trash {
+    font-size: 22px;
+    margin-right: 5px;
+}
+
+.fa-pencil {
+    font-size: 22px;
+    margin-right: 5px;
+}
+
+/* -------------------------------------------- Relatório -------------------------------------------------- */
+
+canvas {
+    margin:auto;
+}
+
+/* -------------------------------------------- Vagas -------------------------------------------------- */
+
+.vagas {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 70%;
+}
+
+.filtro-col {
+    background-color: rgb(17, 41, 68);
+    color: white;
+    border-radius: 7px;
+    padding: 5px;
+    border: 3px solid white;
+}
+.vagas-col {
+    background-color: rgb(17, 41, 68);
+    color: white;
+    border-radius: 7px;
+    padding: 5px;
+    border: 3px solid white;
+}
+
+.mostra-vagas {
+    margin-top: 10px;
+}
+
+.card-vaga {
+    background-color: rgb(247, 247, 247);
+    border-radius: 7px;
+    box-shadow:  5px 5px 2px 4px rgb(228, 228, 228);
+    padding: 10px
+}
+.card-vaga span {
+    font-size: 14px;
+    font-style: italic;
+}
+
+.accordion-button {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(247, 247, 247);
+    box-shadow: none !important;
+}
+
+.accordion-button:hover {
+    color: orange;
+    background-color: rgb(247, 247, 247);
+}
+.accordion-button:focus {
+    color: orange;
+}
+
+.filtro-conteudo select {
+    width: 100%;
+}
+
+.btn-candidatura {
+    height: 35px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+  }
+
+.modal-body form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.modal-body textarea {
+    border-radius: 7px;
+}
+
+.accordion-body p {
+    font-size: 14px;
+    font-style: italic;
+    color: orangered;
+}
+
+.filtro-conteudo {
+    padding: 10px;
+}
+
+.vagas-conteudo {
+    padding: 10px;
+}
+
+.perfil-cont img {
+    border-radius: 50px;
+}
+
+/* ----------------------------------------- Formulários ------------------------------------------------ */
+
+.form {
+    background-color: aqua;
+    width: 70%;
+}
+
+.form-control {
+    width: 170px;
+}
+
+.input-foto {
+    color: red !important;
+    font-size: 11px;
+    border: none;
+    width: 50px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file label {
+    font-size: 14px;
+}
+
+.file_btn {
+    background-color: darkkhaki;
+}
+
+.files {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.files label {
+    color: white !important;
+    background-color: orange;
+    padding: 6px;
+    border-radius: 10px;
+}
+.files label:hover {
+    background-color: rgb(255, 136, 0);
+}
+
+.toolt_call {
+    border: none;
+    background-color: white;
+}
+
+/* -------------------------------------- Ajustes de responsividade ------------------------------------------- */
+
+@media (max-width: 490px) {
+    .files {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .files label {
+        margin-bottom: 5px;
+    }
+}

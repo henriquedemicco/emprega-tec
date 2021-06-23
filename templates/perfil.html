@@ -1,0 +1,272 @@
+{% extends "md_page.html" %}
+
+{% block content %}
+    <div class="perfil-cont container">
+        {% if user.perfil == "empresa" %}
+            <img src="{{ user.foto.url }}" width="200px" alt="Logo da empresa">
+            <br>
+            <h2>{{ user.empresa }}</h2>
+            <h6>{{ user.email }}</h6>
+            <br>
+            <button class="btn-candidatura btn-lg btn-primary btn-block text-uppercase" data-bs-toggle="modal" data-bs-target="#ModalNovaVaga" type="reset">Publicar nova vaga</button>
+            <br>
+
+          <div class="col-md-12">
+              <div class="vagas-col">
+                Vagas publicadas
+              </div>
+
+              {% for vaga in vagas %}
+                <!---------------------------------------- Modal - Excluir Vaga ------------------------------------->
+                <div class="modal fade" id="ModalExcluirVaga{{ vaga.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Exclusão de vaga</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                        <div class="modal-body">
+                          <form action="delete" method="POST">{% csrf_token %}
+                            <input type="number" name="vaga-field" id="vaga-field" value="{{ vaga.id }}" hidden>
+                            <p>Tem certeza que deseja excluir a vaga <strong>{{ vaga.nome_vaga }}</strong>?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Enviar">
+                          </div>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!---------------------------------------- Modal - Editar Vaga ------------------------------------->
+                <div class="modal fade" id="ModalEditarVaga{{ vaga.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Publicação de vaga</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                      <div class="modal-body">
+                          <form action="submit" method="POST">{% csrf_token %}
+                            <input type="number" name="vaga-field" id="vaga-field" value="{{ vaga.id }}" hidden>
+                          <input type="text" name="nome-vaga" id="nome-vaga" placeholder="Vaga:" value="{{ vaga.nome_vaga }}"><br>
+                          <strong>Faixa salarial:</strong>
+                          <select name="faixa-salarial" id="faixa-salarial" value="{{ vaga.salario }}">
+                            <option value="{{ vaga.salario }}">{{ vaga.salario }}</option>
+                            <option value="Até R$ 1.000,00">Até R$ 1.000,00</option>
+                            <option value="De R$ 1.000,00 a 2.000,00">De R$ 1.000,00 a 2.000,00</option>
+                            <option value="De R$ 2.000,00 a 3.000,00">De R$ 2.000,00 a 3.000,00</option>
+                            <option value="Acima de R$ 3.000,00">Acima de R$ 3.000,00</option>
+                          </select>
+                          <br>
+                          <label>Descrição:</label>
+                          <textarea name="descricao" rows="3" placeholder="Descrição:">{{ vaga.descricao }}</textarea>
+                          <br>
+                          <label>Requisitos:</label>
+                          <textarea name="requisitos" rows="3" placeholder="Requisitos:">{{ vaga.requisitos }}</textarea>
+                          <br>
+                          <strong>Escolaridade mínima:</strong>
+                          <select name="escolaridade-minima" id="escolaridade-minima">
+                            <option value="{{ vaga.escolaridade }}">{{ vaga.escolaridade }}</option>
+                            <option value="Ensino fundamental">Ensino fundamental</option>
+                            <option value="Ensino médio">Ensino médio</option>
+                            <option value="Tecnólogo">Tecnólogo</option>
+                            <option value="Ensino Superior">Ensino Superior</option>
+                            <option value="Pós / MBA / Mestrado">Pós / MBA / Mestrado</option>
+                            <option value="Doutorado">Doutorado</option>
+                          </select>
+                          <br>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary" type="reset">Limpar</button>
+                        <input type="submit" class="btn btn-primary" value="Enviar">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                <div class="vagas-conteudo">
+      
+                    <h2 class="card-vaga accordion-header" id="heading{{ vaga.id }}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ vaga.id }}" aria-expanded="true" aria-controls="collapse{{ vaga.id }}">
+                          <div class="titulo-vaga">
+                            <h5>{{ vaga.nome_vaga }}</h5>
+                            <span>Publicada em {{ vaga.get_data_publicacao }}</span>
+                          </div>
+                        </button>
+                      </h2>
+
+                      <div class="edt-exc container-fluid">
+                        <a data-bs-toggle="modal" data-bs-target="#ModalExcluirVaga{{ vaga.id }}"><i class="fa fa-trash"></i></a>
+                        <a data-bs-toggle="modal" data-bs-target="#ModalEditarVaga{{ vaga.id }}"><i class="fa fa-pencil"></i></a>
+                      </div>
+
+                      <div id="collapse{{ vaga.id }}" class="accordion-collapse collapse show" aria-labelledby="heading{{ vaga.id }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                          <strong>Descrição da vaga: </strong>{{ vaga.descricao }}<br><br>
+                          <strong>Faixa salarial: </strong>{{ vaga.salario }}<br><br>
+                          <strong>Requisitos: </strong>{{ vaga.requisitos }}<br><br>
+                          <strong>Escolaridade mínima: </strong>{{ vaga.escolaridade }}
+                          <br><br>
+                          <button class="btn-candidatura btn-lg btn-primary btn-block text-uppercase" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Ver candidatos</button>
+                          <br>
+                          <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                              {% for candidato in candidatos %}
+                                {% if candidato.vaga.id == vaga.id %}
+                                  <a data-bs-toggle="modal" data-bs-target="#ModalCandidato{{ candidato.id }}"><strong>{{ candidato.candidato.first_name }} {{ candidato.candidato.last_name }}</strong></a> {{ candidato.pontos }} de 2 pontos de aderência com a vaga (escolaridade + faixa salarial)
+                                  <br><br>
+                                {% endif %}
+
+                                    <!---------------------------------------- Modal - Candidato ------------------------------------->
+
+                                        <div class="modal fade" id="ModalCandidato{{ candidato.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">{{ candidato.candidato.first_name}} {{ candidato.candidato.last_name}}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                                <div class="pc modal-body">
+                                                  <div class="perfil-candidato">
+                                                    {% if candidato.candidato.foto %}
+                                                      <div><img src="{{ candidato.candidato.foto.url }}"></div>
+                                                    {% else %}
+                                                      <div><img src="../media/media/default-profile.png"></div>
+                                                    {% endif %}
+                                                    <div>
+                                                      <br>
+                                                      <strong>E-mail: </strong> {{ candidato.candidato.email }}<br><br>
+                                                      <strong>Última Escolaridade: </strong>{{ candidato.ultima_escolaridade }}<br>
+                                                      <strong>Pretensão Salarial: </strong>R$ {{ candidato.pretensao_salarial }}<br>
+                                                      <strong>Experiência: </strong>{{ candidato.experiencia }}
+                                                    </div>
+                                            
+                                                  </div>
+                                                </div>
+                              
+                                            </div>
+                                          </div>
+                                        </div>
+                              {% endfor %}
+                            </div>
+                          </div>
+                          {% if vaga.candidaturas == 1 %}
+                            <p><strong>
+                              {{ vaga.candidaturas }} Candidatura enviada
+                            </strong></p>
+                          {% elif vaga.candidaturas == 0 %}
+                            <p><strong>
+                              Nenhuma candidatura até o momento
+                            </strong></p>
+                          {% else %}
+                            <p><strong>
+                              {{ vaga.candidaturas }} Candidaturas enviadas
+                            </strong></p>
+                          {% endif %}
+
+
+                        </div>
+                      </div>
+                    </div>
+                  {% empty %}
+                    <p style="text-align: center;">Ainda não foram criadas vagas para se candidatar.</p>
+                  {% endfor %}
+            </div>
+          </div>
+
+        {% else %}
+          {% if not user.foto %}
+            <img src="../media/media/default-profile.png" width="200px" alt="Foto de perfil">
+          {% else %}
+            <img src="{{ user.foto.url }}" width="200px" alt="Foto de perfil">
+          {% endif %}
+          <br>
+          <h2>{{ user.first_name }}</h2>
+          <h6>{{ user.email }}</h6>
+          <br>
+
+          <div class="col-md-12">
+            <div class="vagas-col">
+              Minhas candidaturas
+            </div>
+            {% for vaga_cand in vagas_cand %}
+            <div class="vagas-conteudo">
+  
+                <h2 class="card-vaga accordion-header" id="heading{{ vaga_cand.id }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ vaga_cand.id }}" aria-expanded="true" aria-controls="collapse{{ vaga_cand.id }}">
+                      <div class="titulo-vaga">
+                        <h5>{{ vaga_cand.vaga.nome_vaga }}</h5>
+                        <span>Candidatura enviada em {{ vaga_cand.get_data_candidatura }}</span>
+                      </div>
+                    </button>
+                  </h2>
+                  <div id="collapse{{ vaga_cand.id }}" class="accordion-collapse collapse show" aria-labelledby="heading{{ vaga_cand.id }}" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <strong>Descrição da vaga: </strong>{{ vaga_cand.vaga.descricao }}<br><br>
+                      <strong>Faixa salarial: </strong>{{ vaga_cand.vaga.salario }}<br><br>
+                      <strong>Escolaridade mínima: </strong>{{ vaga_cand.vaga.escolaridade }}
+                      <br><br>
+                      <br>
+                    </div>
+                  </div>
+                </div>
+
+              {% empty %}
+                <p style="text-align: center;">Você ainda não se candidatou a nenhuma vaga.</p>
+            {% endfor %}
+            
+          </div>
+        
+        {% endif  %}
+
+    </div>
+
+
+    <!---------------------------------------- Modal - Nova Vaga ------------------------------------->
+
+<div class="modal fade" id="ModalNovaVaga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Publicação de vaga</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <div class="modal-body">
+            <form action="submit" method="POST">{% csrf_token %}
+            <input type="text" name="nome-vaga" id="nome-vaga" placeholder="Vaga:"><br>
+            <strong>Faixa salarial:</strong>
+            <select name="faixa-salarial" id="faixa-salarial">
+              <option value="Até R$ 1.000,00">Até R$ 1.000,00</option>
+              <option value="De R$ 1.000,00 a 2.000,00">De R$ 1.000,00 a 2.000,00</option>
+              <option value="De R$ 2.000,00 a 3.000,00">De R$ 2.000,00 a 3.000,00</option>
+              <option value="Acima de R$ 3.000,00">Acima de R$ 3.000,00</option>
+            </select>
+            <br>
+            <textarea name="descricao" rows="4" placeholder="Descrição:"></textarea>
+            <br>
+            <textarea name="requisitos" rows="4" placeholder="Requisitos:"></textarea>
+            <br>
+            <strong>Escolaridade mínima:</strong>
+            <select name="escolaridade-minima" id="escolaridade-minima">
+              <option value="Ensino fundamental">Ensino fundamental</option>
+              <option value="Ensino médio">Ensino médio</option>
+              <option value="Tecnólogo">Tecnólogo</option>
+              <option value="Ensino Superior">Ensino Superior</option>
+              <option value="Pós / MBA / Mestrado">Pós / MBA / Mestrado</option>
+              <option value="Doutorado">Doutorado</option>
+            </select>
+            <br>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="reset">Limpar</button>
+          <input type="submit" class="btn btn-primary" value="Enviar">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

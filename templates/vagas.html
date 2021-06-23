@@ -1,0 +1,101 @@
+{% extends "md_page.html" %}
+
+{% block content %}
+
+    <div class="vagas container">
+        <div class="row">
+            <div class="col-md-12">
+              <div class="vagas-col">
+                Vagas em aberto
+              </div>
+                
+               {% for vaga in vagas %}
+                <div class="vagas-conteudo">
+                    <h2 class="card-vaga accordion-header" id="heading{{ vaga.id }}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ vaga.id }}" aria-expanded="true" aria-controls="collapse{{ vaga.id }}">
+                          <div class="titulo-vaga">
+                            <h5>{{ vaga.nome_vaga }}</h5>
+                            <span>Publicada em {{ vaga.get_data_publicacao }}</span>
+                          </div>
+                        </button>
+                      </h2>
+                      <div id="collapse{{ vaga.id }}" class="accordion-collapse collapse show" aria-labelledby="heading{{ vaga.id }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                          <strong>Empresa: </strong>{{ vaga.empresa.empresa }}<br><br>
+                          <strong>Descrição da vaga: </strong>{{ vaga.descricao }}<br><br>
+                          <strong>Faixa salarial: </strong>{{ vaga.salario }}<br><br>
+                          <strong>Escolaridade mínima: </strong>{{ vaga.escolaridade }}
+                          <br><br>
+                          {% if user.is_authenticated and user.perfil == "candidato" %}
+                            <button class="btn-candidatura btn-lg btn-primary btn-block text-uppercase" data-bs-toggle="modal" data-bs-target="#exampleModal{{ vaga.id }}" type="reset">Candidatar-se</button>
+                          {% else %}
+                          <button class="btn-candidatura btn-lg btn-primary btn-block text-uppercase" onclick="logarCandidato();">Candidatar-se</button>
+                          {% endif %}
+                          <br>
+                          {% if vaga.candidaturas == 1 %}
+                          <p><strong>
+                            {{ vaga.candidaturas }} Candidatura enviada
+                          </strong></p>
+                        {% elif vaga.candidaturas == 0 %}
+                          <p><strong>
+                            Nenhuma candidatura até o momento
+                          </strong></p>
+                        {% else %}
+                          <p><strong>
+                            {{ vaga.candidaturas }} Candidaturas enviadas
+                          </strong></p>
+                        {% endif %}
+                        </div>
+                      </div>
+                    </div>
+  
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{ vaga.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Envio de candidatura</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                            <div class="modal-body">
+                               <form action="submit" method="POST">{% csrf_token %}
+                                <strong>Pretensão salarial:</strong>
+                                R$<input type="number" step="any" name="pretensao-salarial" placeholder="Exemplo: 1500,00" required>
+                                <br>
+                                <strong>Última escolaridade:</strong>
+                                <select name="ultima-escolaridade" id="ultima-escolaridade" required>
+                                  <option value="Ensino fundamental">Ensino fundamental</option>
+                                  <option value="Ensino médio">Ensino médio</option>
+                                  <option value="Tecnólogo">Tecnólogo</option>
+                                  <option value="Ensino Superior">Ensino Superior</option>
+                                  <option value="Pós / MBA / Mestrado">Pós / MBA / Mestrado</option>
+                                  <option value="Doutorado">Doutorado</option>
+                                </select>
+                                <br>
+                                <textarea name="experiencia" rows="5" placeholder="Comente sobre sua experiência profissional." required></textarea>
+                                <input type="text" name="vaga-field" value="{{ vaga.id }}" hidden>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                              <input type="submit" class="btn btn-primary" value="Enviar">
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    {% empty %}
+                      <p style="text-align: center;">Ainda não foram criadas vagas para se candidatar.</p>
+                  {% endfor %}
+              </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <script>
+      function logarCandidato() {
+        alert("Você precisa estar logado como Candidato para se candidatar a novas vagas.")
+      }
+    </script>
+
+{% endblock %}

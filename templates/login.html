@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>:: Emprega Tec - Cadastro ::</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}"/>
+
+    </head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container"><a class="navbar-brand" href="/index/">Emprega Tec</a>
+                <a class="fa fa-home" href="/index/" style="font-size:24px; text-decoration:none"></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-10 col-xl-9 mx-auto">
+            <div class="card card-signin flex-row my-5">
+              <div class="card-img-left1 d-none d-md-flex">
+                 <!-- Background image for card set in CSS! -->
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-center">Acesse seu cadastro</h5>
+                <form class="form-signin" action="submit" method="POST">{% csrf_token %}
+                  <div class="form-label-group">
+                    <input type="email" name="usuario" id="inputEmail" class="form-control" placeholder="E-mail" required>
+                    <label for="inputEmail">E-mail</label>
+                  </div>
+                  <div class="form-label-group">
+                    <input type="password" name="senha" id="inputPassword" class="form-control" placeholder="Senha" required>
+                    <label for="inputPassword">Senha</label>
+                  </div>
+                  
+                  {% for message in messages %}
+                  <p style="font-size:12px"><font color="purple"><b>Erro:</b> </strong>{{ message }}</font></p>
+                  {% endfor %}
+
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Logar</button>
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="reset">Limpar</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+</body>
+</html>

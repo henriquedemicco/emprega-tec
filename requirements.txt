@@ -1,0 +1,7 @@
+Django==3.0.7
+django-environ==0.4.5
+whitenoise==5.2.0
+gunicorn==20.1.0
+psycopg2==2.8.6
+Pillow==8.0.1
+django-heroku==0.3.1
